@@ -1,3 +1,4 @@
+#!/bin/bash
 # LOCATION=$(curl -s https://api.github.com/repos/NYU-Robomaster-Ultraviolet/CV_Detection/releases/latest \
 # | grep "tag_name" \
 # | awk '{print "https://github.com/NYU-Robomaster-Ultraviolet/CV_Detection/archive/" substr($2, 2, length($2)-3) ".zip"}') \
