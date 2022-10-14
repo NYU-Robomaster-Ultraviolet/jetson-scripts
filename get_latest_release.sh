@@ -72,7 +72,7 @@ base_name='/CV_Detection'
 if [ got_latest=1 ];
 then
     unzip release.zip
-    name=$base_name/$GIT_TAG
+    name=$base_name/$L_GIT_TAG
     # create directory if not exist
     if [ ! -d $base_path$base_name ]
     then
