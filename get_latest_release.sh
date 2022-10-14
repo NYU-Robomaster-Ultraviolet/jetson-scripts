@@ -66,7 +66,7 @@ else
     wget -O release.zip $URL
     got_latest=1
 fi
-base_path='~/Repos'
+base_path='/home/ultraviolet/Repos'
 shadow_copy='/CV_Detection_old'
 base_name='/CV_Detection'
 if [ got_latest=1 ];
