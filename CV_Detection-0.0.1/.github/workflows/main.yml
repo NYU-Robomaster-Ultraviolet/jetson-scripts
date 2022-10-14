@@ -1,0 +1,57 @@
+# Ive commented out the following code until we run some tests on the jetsons/xaviers
+# the code below seems to do the job for now
+
+# name: CI
+# on:
+#   push:
+#     branches: [ "main" ]
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: Create Release Folder
+#       run: rsync -arv --exclude='.git/' --exclude='.github/' --exclude='.gitignore' . ./release
+#     - name: Switch to Release Folder
+#       run: |
+#         cd release
+#         ls -la
+#     - name: Bump version and push tag
+#       uses: anothrNick/github-tag-action@master
+#       id: tag_version
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#     - name: Create Release
+#       id: create_release
+#       uses: actions/create-release@latest
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+#       with:
+#         tag_name: ${{ steps.tag_version.outputs.new_tag }}
+#         release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+#         body: |
+#           Automated release
+#         draft: false
+#         prerelease: false
+
+name: CI
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}

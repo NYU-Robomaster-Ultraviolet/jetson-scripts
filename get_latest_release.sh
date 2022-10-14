@@ -78,18 +78,19 @@ then
         mkdir $base_name/
     fi  
     # check if CV_Detection is empty
-    if [ ls -A $base_path/$base_name/ ]
+    number_of_files=$(ls $base_path$base_name/ | wc -l)
+    if [ number_of_files=0 ] 
     then
         # create shadow directory if deleted
-        if [ ! -d $base_path/$shadow_copy/ ]
+        if [ ! -d $base_path$shadow_copy/ ]
         then
-            mkdir $base_path/$shadow_copy/
+            mkdir $base_path$shadow_copy/
         fi 
         # copy to shadow directory
-        cp -a $base_path/$base_name. $base_path/$shadow_copy/
+        cp -a $base_path$base_name. $base_path$shadow_copy/
     fi
     # copy latest release
-    cp -a $name/. $base_path/$base_name/
+    cp -a $name/. $base_path$base_name/
 fi
 echo Script end!
 
