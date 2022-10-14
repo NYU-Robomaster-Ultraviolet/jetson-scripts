@@ -65,16 +65,31 @@ else
     wget -O release.zip $URL
     got_latest=1
 fi
+base_path='~/Repos'
+shadow_copy='/CV_Detection_old'
 base_name='/CV_Detection'
 if [ got_latest=1 ];
 then
     unzip release.zip
     name=$base_name+'/'+$GIT_TAG
-    if [ ! -d $name ]
+    # create directory if not exist
+    if [ ! -d $base_name ]
     then
         mkdir $base_name/
-    fi    
-    cp -a $name/. $base_name/
+    fi  
+    # check if CV_Detection is empty
+    if [ ls -A $base_path/$base_name/ ]
+    then
+        # create shadow directory if deleted
+        if [ ! -d $base_path/$shadow_copy/ ]
+        then
+            mkdir $base_path/$shadow_copy/
+        fi 
+        # copy to shadow directory
+        cp -a $base_path/$base_name. $base_path/$shadow_copy/
+    fi
+    # copy latest release
+    cp -a $name/. $base_path/$base_name/
 fi
 echo Script end!
 
