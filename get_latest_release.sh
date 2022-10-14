@@ -42,6 +42,7 @@ URL=$(echo "https://github.com/NYU-Robomaster-Ultraviolet/CV_Detection/archive/"
 declare GIT_TAG
 statefile=data.txt
 echo Latest git tag = $L_GIT_TAG
+got_latest=0
 #get existing git tag
 if [ -e "$statefile" ]
 then
@@ -53,13 +54,31 @@ then
             exit 0;;
         1) echo New version available!! Downloading...
             echo $L_GIT_TAG > $statefile
-            wget -O release.zip $URL;;
+            wget -O release.zip $URL
+            got_latest=1;;
+
     esac
 else
     # first run / statefile deleted
     echo Creating state file
     echo $L_GIT_TAG > $statefile
     wget -O release.zip $URL
+    got_latest=1
 fi
+base_name='/CV_Detection'
+if [ got_latest=1 ];
+then
+    unzip release.zip
+    name=$base_name+'/'+$GIT_TAG
+    if [ ! -d $name ]
+    then
+        mkdir $base_name/
+    fi    
+    cp -a $name/. $base_name/
+fi
+echo Script end!
+
+
+
 
 
