@@ -74,9 +74,9 @@ then
     unzip release.zip
     name=$base_name+'/'+$GIT_TAG
     # create directory if not exist
-    if [ ! -d $base_name ]
+    if [ ! -d $base_path$base_name ]
     then
-        mkdir $base_name/
+        mkdir $base_path$base_name/
     fi  
     # check if CV_Detection is empty
     number_of_files=$(ls $base_path$base_name/ | wc -l)
