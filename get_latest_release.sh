@@ -72,10 +72,11 @@ base_name='/CV_Detection'
 if [ got_latest=1 ];
 then
     unzip release.zip
-    name=$base_name+'/'+$GIT_TAG
+    name=$base_name/$GIT_TAG
     # create directory if not exist
     if [ ! -d $base_path$base_name ]
     then
+        echo Creating CV_Detection
         mkdir $base_path$base_name/
     fi  
     # check if CV_Detection is empty
@@ -85,10 +86,12 @@ then
         # create shadow directory if deleted
         if [ ! -d $base_path$shadow_copy/ ]
         then
+            echo Creating shadow directory
             mkdir $base_path$shadow_copy/
         fi 
         # copy to shadow directory
-        cp -a $base_path$base_name. $base_path$shadow_copy/
+        cp -a $base_path$base_name/. $base_path$shadow_copy/
+
     fi
     # copy latest release
     cp -a $name/. $base_path$base_name/
