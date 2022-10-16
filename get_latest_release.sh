@@ -101,6 +101,6 @@ fi
 
 # cleanup
 echo Cleaning up!
-rm release.zip
-rm -rf CV_Detection-${L_GIT_TAG:1}
+rm $base_path/jetson-scripts/release.zip
+rm -rf $base_path/jetson-scripts/CV_Detection-${L_GIT_TAG:1}
 echo Script end!
