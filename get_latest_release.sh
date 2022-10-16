@@ -72,7 +72,7 @@ base_name='/CV_Detection'
 if [ got_latest=1 ];
 then
     unzip release.zip
-    name=$base_name-$L_GIT_TAG
+    name=$base_name-${L_GIT_TAG:1}
     # create directory if not exist
     if [ ! -d $base_path$base_name ]
     then
@@ -90,15 +90,17 @@ then
             mkdir $base_path$shadow_copy/
         fi 
         # copy to shadow directory
-        cp -a !(.git/) $base_path$base_name/. $base_path$shadow_copy/
+        # cp -r !(.git/) $base_path$base_name/. $base_path$shadow_copy/
+        rsync -ax --exclude [.git/] $base_path$base_name/. $base_path$shadow_copy/
 
     fi
     # copy latest release
-    cp -a !(.git/) $name/. $base_path$base_name/
+    # cp -r !(.git/) $name/. $base_path$base_name/
+    rsync -ax --exclude [.git/] $base_path/jetson-scripts$name/. $base_path$base_name/
 fi
+
+# cleanup
+echo Cleaning up!
+rm release.zip
+rm -rf CV_Detection-${L_GIT_TAG:1}
 echo Script end!
-
-
-
-
-
