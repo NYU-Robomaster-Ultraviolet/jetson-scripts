@@ -1,3 +1,4 @@
 *.txt
 *.zip
 .DS_Store
+.git
