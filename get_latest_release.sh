@@ -1,9 +1,17 @@
 #!/bin/bash
+# commented code - not useful - saving for future use/reference
 # LOCATION=$(curl -s https://api.github.com/repos/NYU-Robomaster-Ultraviolet/CV_Detection/releases/latest \
 # | grep "tag_name" \
 # | awk '{print "https://github.com/NYU-Robomaster-Ultraviolet/CV_Detection/archive/" substr($2, 2, length($2)-3) ".zip"}') \
 # ; wget -O release.zip $LOCATION
+
+
 # function to compare versions
+# input: 2 strings
+# output: 0 if equal
+#         1 if >
+#         2 if <
+# reference: https://stackoverflow.com/questions/4023830/how-to-compare-two-strings-in-dot-separated-version-format-in-bash
 vercomp () {
     if [[ $1 == $2 ]]
     then
@@ -34,17 +42,29 @@ vercomp () {
     done
     return 0
 }
-# get latest git tag
+
+# get latest git tag using github api
+# The api returns lot of metadata, use only tag_name
+# https://gist.github.com/lukechilds/a83e1d7127b78fef38c2914c4ececc3c
+# read actual github documentation for all metadata
 L_GIT_TAG=$(curl -s https://api.github.com/repos/NYU-Robomaster-Ultraviolet/CV_Detection/releases/latest \
 | grep "tag_name" \
 | awk '{print substr($2, 2, length($2)-3)}') \
 ;
 URL=$(echo "https://github.com/NYU-Robomaster-Ultraviolet/CV_Detection/archive/"$L_GIT_TAG".zip")
+
+# some variables to play with
 declare GIT_TAG
-statefile=data.txt
-echo Latest git tag = $L_GIT_TAG
+base_path='/home/ultraviolet/Repos'
+shadow_copy='/CV_Detection_old'
+base_name='/CV_Detection'
+statefile=$base_path/jetson-scripts/data.txt
 got_latest=0
+
+echo Latest git tag = $L_GIT_TAG
+
 #get existing git tag
+# check if statefile exists
 if [ -e "$statefile" ]
 then
     read -r GIT_TAG <"$statefile"
@@ -52,23 +72,23 @@ then
     vercomp $L_GIT_TAG $GIT_TAG
     case $? in
         0) echo Already running latest!! Exiting...
-            exit 0;;
+            exit 0;; # No need to update
         1) echo New version available!! Downloading...
-            echo $L_GIT_TAG > $statefile
+            echo $L_GIT_TAG > $statefile #update latest version in statefile
             wget -O release.zip $URL
             got_latest=1;;
 
     esac
 else
+    # statefile does not exist
     # first run / statefile deleted
     echo Creating state file
     echo $L_GIT_TAG > $statefile
     wget -O release.zip $URL
     got_latest=1
 fi
-base_path='/home/ultraviolet/Repos'
-shadow_copy='/CV_Detection_old'
-base_name='/CV_Detection'
+
+# only if a new release is found
 if [ got_latest=1 ];
 then
     unzip release.zip
