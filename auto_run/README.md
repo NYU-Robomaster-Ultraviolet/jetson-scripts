@@ -12,13 +12,13 @@ This script is designed to setup new boards designed to run CV_Detection reposit
   - path_to_base
 
 ## Current tasks
-- [ x ] upgrade packages
-- [ x ] install python packages and tools
-- [ x ] install archiconda
-- [ x ] create conda environment
-- [ x ] add cronjob to get latest release
-- [ x ] setup pyrealsense and librealsense 
-- [   ] automate Github setup
+- [X] upgrade packages
+- [X] install python packages and tools
+- [X] install archiconda
+- [X] create conda environment
+- [X] add cronjob to get latest release
+- [X] setup pyrealsense and librealsense 
+- [ ] automate Github setup
 
 ## Run
 <b>Go through prerequisites first</b>
