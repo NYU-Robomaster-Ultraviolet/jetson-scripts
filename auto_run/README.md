@@ -1,0 +1,29 @@
+# Autorun 
+This script is designed to setup new boards designed to run CV_Detection repository (Xavier, Nano, Coral etc) right out of the box.
+
+## Prerequisites
+- Display
+- Keyboard
+- Mouse
+- Internet
+- Github setup on browser + command line (This is important else major chunk of the script will fail!!!)
+- Set variable values before running
+  - username
+  - path_to_base
+
+## Current tasks
+- [ x ] upgrade packages
+- [ x ] install python packages and tools
+- [ x ] install archiconda
+- [ x ] create conda environment
+- [ x ] add cronjob to get latest release
+- [ x ] setup pyrealsense and librealsense 
+- [   ] automate Github setup
+
+## Run
+<b>Go through prerequisites first</b>
+```shell
+cd scripts
+./auto_run.sh
+```
+
