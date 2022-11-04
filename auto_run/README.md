@@ -18,6 +18,7 @@ This script is designed to setup new boards designed to run CV_Detection reposit
 - [X] create conda environment
 - [X] add cronjob to get latest release
 - [X] setup pyrealsense and librealsense 
+- [ ] create systemD service
 - [ ] automate Github setup
 
 ## Run
